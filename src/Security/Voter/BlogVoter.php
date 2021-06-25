@@ -30,6 +30,7 @@ class BlogVoter extends Voter
                 // logic to determine if the user can EDIT
                 // return true or false
                 break;
+
             case 'POST_VIEW':
                 // logic to determine if the user can VIEW
                 // return true or false
