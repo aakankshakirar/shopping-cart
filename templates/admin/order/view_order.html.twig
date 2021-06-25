@@ -1,0 +1,102 @@
+{% extends "admin/layout/app.html.twig" %}
+
+{% block title %}View Order{% endblock %}
+
+{% block body %}
+
+  <h1 class="mt-4 h3 mb-3 font-weight-normal">View Order</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+      <a href="{{ path('order_index') }}">Order</a>
+    </li>
+    <li class="breadcrumb-item active">View Order</li>
+  </ol>
+
+  <div>
+    <div class="block-content block-content-full table-responsive">
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="text-success">General Details</h5>
+          <table class="table table-bordered table-sm">
+            <tbody>
+              <tr>
+                <th>DATE CREATED :</th>
+                <td>{{ order.dateCreated | date('d-m-Y') }}</td>
+              </tr>
+              <tr>
+                <th>ORDER NO. :</th>
+                <td>#{{ order.id }}</td>
+              </tr>
+              <tr>
+                <th>ORDER NOTE. :</th>
+                <td>{{ order.note }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h5 class="text-success">Billing Details</h5>
+          <table class="table table-bordered table-sm">
+            <tbody>
+              <tr>
+                <th>CUSTOMER NAME :</th>
+                <td>{{ order.user.userMeta.firstName }}
+                  {{ order.user.userMeta.lastName }}</td>
+              </tr>
+              <tr>
+                <th>EMAIL:</th>
+                <td>{{ order.user.email }}</td>
+              </tr>
+              <tr>
+                <th>PHONE :</th>
+                <td>{{ order.user.userMeta.contact }}</td>
+              </tr>
+              <tr>
+                <th>BILLING ADDRESS :</th>
+                <td>{{ order.user.userMeta.address }}
+                  {{ order.user.userMeta.city }}
+                  {{ order.user.userMeta.pincode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br>
+
+      <table class="table table-bordered table-responsive">
+        <thead>
+          <tr>
+            <th>
+              Product
+            </th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th class="text-right">Sub Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in order.orderItems %}
+            <tr>
+              <td>
+                <b>{{ item.product.title }}</b>
+              </td>
+              <td>{{ item.quantity }}</td>
+              <td>Rs {{ item.product.price }}</td>
+              <td class="text-right">Rs {{ item.amount }}</td>
+            </tr>
+          {% endfor %}
+
+          <tr>
+            <th colspan="3" class="text-right success-order-head">
+              <a class="text">GRAND TOTAL</a>
+            </th>
+            <th class="success-order-head text-right">
+              <a class="text">Rs {{ order.totalAmount }}</a>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+{% endblock %}

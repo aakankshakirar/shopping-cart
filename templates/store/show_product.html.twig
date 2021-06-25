@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('home') }}">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('home') }}">New Arrivals</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
+        </ol>
+    </nav>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success">
+            {{ message }}
+            <a href="{{ path('view_cart') }}">View Cart</a>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-dismissible alert-danger">
+            {{ message | trans }}
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-sm-5">
+            <img src="{{ (product.image) ? asset('uploads/') ~ product.image :  asset('uploads/default.jpg') }}" class="img-fluid w-100">
+        </div>
+        <div class="col-sm-7">
+            <h3>{{ product.title }}</h3>
+            <h4 class="text-muted">Rs
+                {{  product.price }}</h4>
+            <br/>
+            <p>Categories :
+                {% for category in product.category %}
+                    <span><a href="">{{ category.title }}</a></span>
+                {% endfor %}
+            </p>
+            <p>Product Details</p>
+            <hr/>
+            <p>{{ product.description | raw }}</p>
+            <hr/>
+            <form method="post" action="{{ path('add_cart_item', {"id" : product.id }) }}" id="cart_form">
+                <p>Quantity :
+                    <input type="number" name="quantity" value="1" class="form-control" min="0" id="quant"></p>
+                <input type="button" value="Add to Cart" class="btn btn-primary w-100" id="submit_btn">
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('#submit_btn').click(function () {
+            var product_id = {{ product.id }};
+            var quantity = $('#quant').val();
+
+            $.ajax({
+                type: "POST",
+                url: '{{ path('add_cart_item', {"id" : product.id }) }}',
+                data:  { id: {{ product.id }}, quantity : quantity},
+                cache: false,
+                dataType:'text',
+                success: function(data){
+                    alert("Yes its success");
+                }
+            });
+        });
+    </script>
+{% endblock %}

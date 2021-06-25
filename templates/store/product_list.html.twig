@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Products
+{% endblock %}
+
+{% block body %}
+  <div class="row">
+    {# Side bar - Categories #}
+    <div class="col-sm-4 my-3">
+    {% include "store/_categories.html.twig" with {"categories" : categories} %}
+    </div>
+    {# Main Content - Products #}
+    <div class="col-sm-8">
+    <div class="row">
+      {% for product in products %}
+        <div class="col-sm-3 my-3">
+          <img src="{{ (product.image) ? asset('uploads/') ~ product.image :  asset('uploads/default.jpg') }}" class="img-fluid mb-2">
+          <p class="mb-0">{{ product.title }}</p>
+          <span class="text-muted">Rs
+            {{  product.price }}</span>
+          <br/>
+          <a href="{{ path('product_show', {"id" : product.id}) }}" class="btn btn-sm btn-primary mt-2">Shop Now</a>
+        </div>
+      {% endfor %}
+    </div>
+
+    </div>
+  </div>
+{% endblock %}

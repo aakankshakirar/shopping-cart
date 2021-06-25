@@ -1,0 +1,74 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+  Checkout{% endblock %}
+
+{% block body %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{ path('home') }}">Home</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+    </ol>
+  </nav>
+
+  {% if errors %}
+    <div class="alert alert-danger">
+      <h2>Validation failed</h2>
+      <ul>
+        {% for field, errorMessage in errors %}
+          <li>{{ field }}:
+            {{ errorMessage }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+
+    <div class="row">
+      <div class="col-sm-7">
+
+        {{ form_start(form_user_meta) }}
+        {{ form_widget(form_user_meta) }}
+            <button class="btn btn-success mt-4 w-100" formnovalidate>{{ button_label|default('Save') }}</button>
+        {{ form_end(form_user_meta) }}
+      </div>
+      <div class="col-sm-5">
+        {% if cart %}
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th scope="col">Product</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% set total = 0 %}
+              {% for cart_item in cart %}
+                <tr>
+                  <td style="width:10%"><img src="{{ (cart_item.image) ? asset('uploads/') ~ cart_item.image :  asset('uploads/default.jpg') }}" class="img-fluid"></td>
+                  <th scope="row" class="text-muted">{{ cart_item.quantity }}
+                    ×
+                    {{ cart_item.title }}</th>
+                  <td class="text-muted">Rs
+                    {{ cart_item.subtotal }}</td>
+                </tr>
+                {% set total = total + cart_item.subtotal %}
+              {% endfor %}
+            </tbody>
+          </table>
+          <hr/>
+          <h4 style="text-align:right">
+            <span>Total :</span>
+            Rs
+            {{ total }}</h4>
+        {% endif %}
+
+        <p style="text-align:right">Payment Method : Cash on Delivery(COD)</p>
+  
+      </div>
+    </div>
+  
+{% endblock %}

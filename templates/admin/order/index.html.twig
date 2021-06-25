@@ -1,0 +1,42 @@
+{% extends "admin/layout/app.html.twig" %}
+
+{% block title %}Order index{% endblock %}
+
+{% block body %}
+  <h1 class="mt-4 h3 mb-3 font-weight-normal">Order List</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+      <a href="{{ path('order_index') }}">Order</a>
+    </li>
+    <li class="breadcrumb-item active">Order List</li>
+  </ol>
+
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>Order Id</th>
+        <th>User</th>
+        <th>Order Note</th>
+        <th>Date Placed</th>
+        <th>Total Anount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr>
+          <td>#{{ order.id }}</td>
+          <td>{{ order.user.userMeta.firstName }}
+            {{ order.user.userMeta.lastName }}</td>
+          <td>{{ order.note }}</td>
+          <td>{{ order.dateCreated | date('d-m-Y')  }}</td>
+          <td class="text-success">
+            Rs.
+            {{ order.totalAmount }}
+          </td>
+          <td><a href="{{ path('view_order', {"id" : order.id}) }}" class="btn btn-sm btn-primary">View Order</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

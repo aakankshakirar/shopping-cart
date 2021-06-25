@@ -1,0 +1,15 @@
+{% extends "admin/layout/app.html.twig" %}
+
+{% block title %}New Category{% endblock %}
+
+{% block body %}
+  <h1 class="mt-4 h3 mb-3 font-weight-normal">Add New Category</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+      <a href="{{ path('category_index') }}">Category</a>
+    </li>
+    <li class="breadcrumb-item active">Add Category</li>
+  </ol>
+
+  {{ include('admin/category/_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "admin/layout/app.html.twig" %}
+
+{% block title %}{{ "Add New Product" | trans }}{% endblock %}
+
+{% block body %}
+  <h1 class="mt-4 h3 mb-3 font-weight-normal">{{ "Add New Product" | trans }}</h1>
+
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+      <a href="{{ path('product_index') }}">{{ "Product" | trans }}</a>
+    </li>
+    <li class="breadcrumb-item active">{{ "Add Product" | trans }}</li>
+  </ol>
+
+  {{ include('admin/product/_form.html.twig') }}
+{% endblock %}

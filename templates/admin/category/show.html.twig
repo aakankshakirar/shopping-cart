@@ -1,0 +1,28 @@
+{% extends "admin/layout/app.html.twig" %}
+
+{% block title %}Category{% endblock %}
+
+{% block body %}
+  <h1 class="mt-4 h3 mb-3 font-weight-normal">Category</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+      <a href="{{ path('category_index') }}">Category</a>
+    </li>
+    <li class="breadcrumb-item active">Category</li>
+  </ol>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ category.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ category.title }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {{ include('admin/category/_delete_form.html.twig') }}
+{% endblock %}

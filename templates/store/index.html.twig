@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Our Store{% endblock %}
+
+{% block body %}
+  <h1 class="text-center">
+{{ 'arrival' | trans   }}
+</h1>
+  <h2>Added in production environment</h2>
+  <hr/>
+  {% if products is empty %}
+    <p>No product found</p>
+  {% else %}
+    <div class="row">
+      {% for product in products %}
+        <div class="col-sm-3 my-3">
+          <img src="{{ (product.image) ? asset('uploads/') ~ product.image :  asset('uploads/default.jpg') }}" class="img-fluid mb-2">
+          <p class="mb-0">{{ product.title }}</p>
+          <span class="text-muted">Rs {{  product.price }}</span>
+          <br/>
+          <a href="{{ path('product_show', {"id" : product.id}) }}" class="btn btn-sm btn-primary mt-2">Shop Now</a>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+{% endblock %}

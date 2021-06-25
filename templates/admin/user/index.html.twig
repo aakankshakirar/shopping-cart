@@ -1,0 +1,39 @@
+{% extends "admin/layout/app.html.twig" %}
+
+{% block title %}Category index{% endblock %}
+
+{% block body %}
+  <h1 class="mt-4 h3 mb-3 font-weight-normal">User List</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+      <a href="{{ path('user_index') }}">User</a>
+    </li>
+    <li class="breadcrumb-item active">User List</li>
+  </ol>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.roles[0] }}</td>
+          <td>
+            {{ include('admin/user/_delete_form.html.twig') }}</td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="3">no records found</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

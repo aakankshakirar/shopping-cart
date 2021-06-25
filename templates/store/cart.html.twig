@@ -1,0 +1,68 @@
+{% extends "base.html.twig" %}
+
+{% block title  %}
+
+  Shopping Cart
+{% endblock %}
+{% block body %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{ path('home') }}">Home</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+    </ol>
+  </nav>
+  {% if cart is empty %}
+    <p>No items added in cart</p>
+  {% else %}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th></th>
+          <th scope="col">Product</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Unit Price</th>
+          <th scope="col">Sub Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% set total = 0 %}
+        {% for cart_item in cart %}
+          <tr>
+            <td style="width:10%"><img src="{{ (cart_item.image) ? asset('uploads/') ~ cart_item.image :  asset('uploads/default.jpg') }}" class="img-fluid"></td>
+            <th scope="row">{{ cart_item.title }}</th>
+            <td class="text-muted">{{ cart_item.quantity }}</td>
+            <td class="text-muted">Rs
+              {{ cart_item.price }}</td>
+            <td>Rs
+              {{ cart_item.subtotal }}</td>
+            <td>
+              <a href="{{ path('delete_cart_item', {"id": cart_item.id}) }}" class="btn btn-sm btn-outline-danger">Delete
+              </a>
+            </td>
+          </tr>
+          {% set total = total + cart_item.subtotal %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <hr/>
+    <div class="row">
+      <div class="col-sm-12" style="text-align:right">
+        <h4 class="font-weight-normal">
+          <strong>SUBTOTAL :</strong>
+          Rs
+          {{ total }}</h4>
+        <p>
+          <span class="text-danger">
+            <strong>Congratulations !<strong></span>
+              You've got free shipping!
+            </p>
+            <p class="text-muted">Taxes, shipping and discounts codes calculated at checkout</p>
+            <a class="btn btn-primary btn-lg" href="{{ path('checkout') }}">CHECK OUT</a>
+          </div>
+        </div>
+      {% endif %}
+
+    {% endblock %}
